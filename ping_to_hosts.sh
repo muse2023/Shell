@@ -7,7 +7,7 @@ target="www.gstatic.com"
 temp_file="/tmp/ping_results.txt"
 
 # 执行ping命令并存储结果
-ping -c 5 -4 $target | grep 'bytes from' | awk -F' ' '{print $4 " " $7}' | sed 's/time=//g' > $temp_file
+ping -c 5 -4 $target | grep 'bytes from' | awk -F'(' '{print $2}' | awk -F')' '{print $1 " " $NF}' | sed 's/time=//g' > $temp_file
 
 # 查找最小延迟的行
 min_delay_line=$(sort -k2 -n $temp_file | head -n 1)
